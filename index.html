@@ -15,7 +15,7 @@ main{max-width:560px;margin:16px auto 40px;padding:0 16px}
 .item img{width:64px;height:64px;border-radius:10px;object-fit:cover;background:#eee;flex:none}
 .num{font-weight:800;color:var(--rosa);font-size:20px;min-width:52px;text-align:center}
 .nome{flex:1;font-size:15px;line-height:1.25}
-.btn{background:var(--rosa);color:#fff;font-weight:700;font-size:13px;padding:8px 12px;border-radius:999px;white-space:nowrap}
+.btns{display:flex;flex-direction:column;gap:6px}.btn{background:var(--rosa);color:#fff;font-weight:700;font-size:13px;padding:8px 12px;border-radius:999px;white-space:nowrap;text-decoration:none;text-align:center}.btn.ali{background:#e62e04}
 .vazio{text-align:center;color:var(--cinza);padding:30px 0}
 footer{text-align:center;color:var(--cinza);font-size:12px;padding:0 16px 30px}
 </style></head><body>
@@ -23,13 +23,15 @@ footer{text-align:center;color:var(--cinza);font-size:12px;padding:0 16px 30px}
 <div class="busca"><input id="q" type="search" inputmode="numeric" placeholder="Nº do vídeo" autofocus></div>
 <p class="dica">ou role a lista, os mais novos ficam no topo</p>
 <main id="lista"></main>
-<footer>Links de afiliado da Shopee: você paga o mesmo preço e ajuda o perfil 💕</footer>
+<footer>Links de afiliado da Shopee e do AliExpress: você paga o mesmo preço e ajuda o perfil 💕</footer>
 <script>
-const ITENS=[{"n": 1, "nome": "Kit anti-ronco magnético", "link": "https://s.shopee.com.br/7AeX7oKDGH", "img": "https://cf.shopee.com.br/file/br-11134207-820l5-mpco64gx1rt243"}];
+let ITENS=[];
 const lista=document.getElementById('lista'),q=document.getElementById('q');
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function mostrar(){const t=q.value.trim();const f=t?ITENS.filter(i=>String(i.n)===t||(isNaN(t)&&i.nome.toLowerCase().includes(t.toLowerCase()))):ITENS;
-lista.innerHTML=f.length?f.slice(0,300).map(i=>`<a class="item" href="${esc(i.link)}" target="_blank" rel="noopener sponsored">
-<span class="num">${i.n}</span><img src="${esc(i.img)}" alt="" loading="lazy"><span class="nome">${esc(i.nome)}</span><span class="btn">Ver na Shopee</span></a>`).join(''):'<p class="vazio">Não achei esse número 😕</p>'}
-q.addEventListener('input',mostrar);mostrar();
+lista.innerHTML=f.length?f.slice(0,300).map(i=>`<div class="item">
+<span class="num">${i.n}</span><img src="${esc(i.img)}" alt="" loading="lazy"><span class="nome">${esc(i.nome)}</span>
+<span class="btns"><a class="btn" href="${esc(i.link)}" target="_blank" rel="noopener sponsored">Shopee</a>${i.ali?`<a class="btn ali" href="${esc(i.ali)}" target="_blank" rel="noopener sponsored">AliExpress</a>`:''}</span></div>`).join(''):'<p class="vazio">Não achei esse número 😕</p>'}
+q.addEventListener('input',mostrar);
+fetch('posts.json?'+Date.now()).then(r=>r.ok?r.json():[]).then(d=>{ITENS=d.slice().reverse();mostrar()}).catch(()=>mostrar());
 </script></body></html>
