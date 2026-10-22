@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Achadinhos do Pae – links</title>
+<style>
+:root{--rosa:#ff2e7e;--fundo:#fff5f9;--texto:#1d1d1f;--cinza:#6b6b75;--card:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--fundo);color:var(--texto)}
+header{background:var(--rosa);color:#fff;text-align:center;padding:26px 16px 70px}
+header h1{margin:0;font-size:24px}header p{margin:6px 0 0;opacity:.9;font-size:14px}
+.busca{max-width:560px;margin:-48px auto 0;padding:0 16px;position:relative}
+.busca input{width:100%;font-size:22px;padding:16px 18px;border-radius:14px;border:0;box-shadow:0 6px 24px rgba(0,0,0,.12);outline:none;text-align:center}
+.dica{text-align:center;color:var(--cinza);font-size:13px;margin:10px 0 0}
+main{max-width:560px;margin:16px auto 40px;padding:0 16px}
+.item{display:flex;gap:12px;align-items:center;background:var(--card);border-radius:14px;padding:10px;margin:10px 0;text-decoration:none;color:inherit;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.item img{width:64px;height:64px;border-radius:10px;object-fit:cover;background:#eee;flex:none}
+.num{font-weight:800;color:var(--rosa);font-size:20px;min-width:52px;text-align:center}
+.nome{flex:1;font-size:15px;line-height:1.25}
+.btn{background:var(--rosa);color:#fff;font-weight:700;font-size:13px;padding:8px 12px;border-radius:999px;white-space:nowrap}
+.vazio{text-align:center;color:var(--cinza);padding:30px 0}
+footer{text-align:center;color:var(--cinza);font-size:12px;padding:0 16px 30px}
+</style></head><body>
+<header><h1>Achadinhos do Pae</h1><p>Digite o número que aparece no vídeo 👇</p></header>
+<div class="busca"><input id="q" type="search" inputmode="numeric" placeholder="Nº do vídeo" autofocus></div>
+<p class="dica">ou role a lista, os mais novos ficam no topo</p>
+<main id="lista"></main>
+<footer>Links de afiliado da Shopee: você paga o mesmo preço e ajuda o perfil 💕</footer>
+<script>
+const ITENS=[];
+const lista=document.getElementById('lista'),q=document.getElementById('q');
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function mostrar(){const t=q.value.trim();const f=t?ITENS.filter(i=>String(i.n)===t||(isNaN(t)&&i.nome.toLowerCase().includes(t.toLowerCase()))):ITENS;
+lista.innerHTML=f.length?f.slice(0,300).map(i=>`<a class="item" href="${esc(i.link)}" target="_blank" rel="noopener sponsored">
+<span class="num">${i.n}</span><img src="${esc(i.img)}" alt="" loading="lazy"><span class="nome">${esc(i.nome)}</span><span class="btn">Ver na Shopee</span></a>`).join(''):'<p class="vazio">Não achei esse número 😕</p>'}
+q.addEventListener('input',mostrar);mostrar();
+</script></body></html>
