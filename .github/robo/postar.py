@@ -20,9 +20,14 @@ SITE = "https://adrianolopae.github.io/achadinhosdopae"
 
 
 def main():
-    itens = sorted(FILA.glob("*.json"))
+    agora = datetime.now(timezone.utc)
+    itens = []
+    for a in sorted(FILA.glob("*.json")):
+        d = json.loads(a.read_text(encoding="utf-8"))
+        if d.get("link", "").startswith("http") and (not d.get("nao_antes") or datetime.fromisoformat(d["nao_antes"]) <= agora):
+            itens.append(a)
     if not itens:
-        print("fila vazia")
+        print("nada liberado pra postar agora")
         return
     arq = itens[0]
     p = json.loads(arq.read_text(encoding="utf-8"))
