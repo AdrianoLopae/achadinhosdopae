@@ -25,7 +25,7 @@ footer{text-align:center;color:var(--cinza);font-size:12px;padding:0 16px 30px}
 <main id="lista"></main>
 <footer>Links de afiliado da Shopee: você paga o mesmo preço e ajuda o perfil 💕</footer>
 <script>
-const ITENS=[];
+const ITENS=[{"n": 1, "nome": "Kit anti-ronco magnético", "link": "https://s.shopee.com.br/7AeX7oKDGH", "img": "https://cf.shopee.com.br/file/br-11134207-820l5-mpco64gx1rt243"}];
 const lista=document.getElementById('lista'),q=document.getElementById('q');
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function mostrar(){const t=q.value.trim();const f=t?ITENS.filter(i=>String(i.n)===t||(isNaN(t)&&i.nome.toLowerCase().includes(t.toLowerCase()))):ITENS;
